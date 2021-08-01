@@ -1,0 +1,48 @@
+{% include 'top.html' %}
+<div class="content">
+    <div class="container details">
+
+        <h2 class="title"> Add Song </h2>
+
+        <!-- Song Schema 
+            CREATE TABLE Song (
+                song_id INTEGER PRIMARY KEY REFERENCES AudioMedia(media_id),
+                song_title VARCHAR(100),
+                length INTEGER
+            );
+            Associated Media_id information
+                - storage location
+            Associated Artist information
+                - artist_id
+            Associated Meta data
+                - description (4)
+                - song_genre (1)
+                - artwork (3)
+        -->
+        <form class="Add" method="POST" action="{{url_for('add_song')}}">
+        
+            Song title: <input type="text" name="song_title" value="Empty Song" placeholder="Song name">
+            Song length (s): <input type="text" name="length" value="0" placeholder="0">
+            Artist ID: <input type="text" name="artist_id" value="19" placeholder="19">
+            <br />
+            Storage location: <input type="text" name="storage_location" value="no location" placeholder="Storage location">
+            Description: <input type="text" name="description" value="no description" placeholder="Description">
+            <br />
+            Song Genre: <input type="text" name="song_genre" value="rap" placeholder="rap">
+            Artwork: <input type="text" name="artwork" value="notfound.png" placeholder="notfound.png">
+            <br />
+            <button class="flat" type="submit">Add</button>
+            <br />
+            <hr />
+            <hr />
+            <hr />
+        
+        
+        </form>
+ 
+        <br/>
+        <div>
+
+    </div>
+</div>
+{% include 'bottom.html'%}

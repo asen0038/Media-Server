@@ -1,0 +1,77 @@
+{% include 'top.html' %}
+<div class="content">
+    <div class="container details">
+        <!-- TODO Query 6  
+        Display All Relevant Podcast Infromation including meta data
+        Display All Relevant Podcast Episodes for this Podcast
+        -->
+
+        <!-- Check if We have a valid podcast -->
+        {% if podcast | length > 0 %}
+            <h2 class="title"> {{podcast[0].podcast_title}} </h2> <h4> Last updated {{podcast[0].podcast_last_updated}}</h4>
+
+            <b>Podcast ID:</b> {{podcast[0].podcast_id}} <br/>
+            
+            <b>URI:</b> <a href = {{podcast[0].podcast_uri}}> {{podcast[0].podcast_uri}}</a> <br/>
+
+            <hr/>
+            <h3> Artworks </h3>
+            {% for instance in podcast %}
+                {% if instance.md_type_name == 'artwork' %}
+                    <img src="{{instance.md_value}}" alt="image">
+                    <br/>© Spotify Public Domain 2019.
+                {% endif %}
+            {% endfor %}
+            <br/>
+            <h3> Descriptions </h3>
+            {% for instance in podcast %}
+                {% if instance.md_type_name == 'description' %}
+                    <div>
+                        {{instance.md_value}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <br/>
+            <h3> Copyright Holder </h3>
+            {% for instance in podcast %}
+                {% if instance.md_type_name == 'copyright holder' %}
+                    <div>
+                        {{instance.md_value}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h2 class="title"> Invalid podcast ID</h2>
+        {% endif %}
+        
+                <!-- Podcast Episodes -->
+                <h3>Episodes for this Podcast</h3>
+                <table class="styled">
+                    <thead>
+                        <tr>
+                            <td>Podcast Episode Media ID</td>
+                            <td>Podcast Episode Title</td>
+                            <td>Podcast Episode URI</td>
+                            <td>Podcast Episode Published Date</td>
+                            <td>Podcast Episode Length</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for instance in podcastEps %}
+                        <!-- Each row is a link to each individual podcast episode page -->
+                        <tr class="clickable-tr" data-href="{{ url_for('single_podcastep', media_id=instance.media_id)}}">
+                            <td style="text-align: center">{{ instance.media_id }}</td>
+                            <td>{{instance.podcast_episode_title}}</td>
+                            <td>{{instance.podcast_episode_uri}}</td>
+                            <td>{{instance.podcast_episode_published_date}}</td>
+                            <td>{{instance.podcast_episode_length}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+        
+                </table>
+        
+            </div>
+    </div>
+</div>
+{% include 'bottom.html'%}

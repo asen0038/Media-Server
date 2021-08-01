@@ -1,0 +1,47 @@
+{% include 'top.html' %}
+<div class="content">
+    <div class="container details">
+        <!-- TODO Query 7
+        Display All Relevant Podcast Episode Infromation including meta data
+        -->
+            <!-- Check if We have a valid podcast episode -->
+            {% if podcastEpisode | length > 0 %}
+            <h2 class="title"> {{podcastEpisode[0].podcast_episode_title}} </h2> <h4> Published on {{podcastEpisode[0].podcast_episode_published_date}}</h4>
+
+            <b>Podcast Episode ID:</b> {{podcastEpisode[0].media_id}} <br/>
+            <b>URI:</b> <a href = {{podcastEpisode[0].podcast_episode_uri}}> {{podcastEpisode[0].podcast_episode_uri}}</a> <br/>
+            <br/>
+            This episode is {{podcastEpisode[0].podcast_episode_length}} seconds long.
+            <hr/>
+            <h3> Artworks </h3>
+            {% for instance in podcastEpisode %}
+                {% if instance.md_type_name == 'artwork' %}
+                    <img src="{{instance.md_value}}" alt="image">
+                    <br/>© Spotify Public Domain 2019.
+                {% endif %}
+            {% endfor %}
+            <br/>
+            <h3> Descriptions </h3>
+            {% for instance in podcastEpisode %}
+                {% if instance.md_type_name == 'description' %}
+                    <div>
+                        {{instance.md_value}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <br/>
+            <h3> Copyright Holder </h3>
+            {% for instance in podcastEpisode %}
+                {% if instance.md_type_name == 'copyright holder' %}
+                    <div>
+                        {{instance.md_value}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h2 class="title"> Invalid Podcast Episode ID</h2>
+        {% endif %}
+
+    </div>
+</div>
+{% include 'bottom.html'%}
